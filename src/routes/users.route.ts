@@ -26,7 +26,7 @@ usersRoute.get('/users/:uuid', (req: Request<{uuid:string}>, res:Response,next:N
 })
 
 // atençao ao json
-usersRoute.post('/users',(req: Request, res:Response,next:NextFunction) =>{
+usersRoute.post('/users', (req: Request<{uuid:string}>, res:Response,next:NextFunction)=>{
    const newUser = req.body
    console.log(req.body)
 
@@ -34,8 +34,23 @@ usersRoute.post('/users',(req: Request, res:Response,next:NextFunction) =>{
 })
 
 
-/// criar um PUT para alterar
+// incompleto
+usersRoute.put('/users/:uuid',  (req: Request<{uuid:string}>, res:Response,next:NextFunction)=>{
+    const uuid = req.params.uuid
+    const modifierUser = req.body
 
-/// delete
+    modifierUser.uui = uuid
+
+})
+
+// incompleto
+usersRoute.delete('/users/:uuid', async (req: Request<{ uuid: string}>, res: Response, next: NextFunction)=>{
+    const uuid = req.params.uuid;
+    // await userRepository.remove(uuid)
+    res.sendStatus(StatusCodes.OK)
+
+})
+
+
 
 export default usersRoute;
