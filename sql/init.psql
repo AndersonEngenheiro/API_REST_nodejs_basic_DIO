@@ -1,0 +1,28 @@
+
+ /*permite chaamr a funçao hash dentro do pg*/
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+CREATE TABLE IF NOT EXISTS application_user(
+    uuid uuid DEFAULT uuid_generate_v4(), /* id único - hash*/
+    username VARCHAR NOT NULL,
+    password  VARCHAR NOT NULL,
+    PRIMARY KEY (uuid)
+
+);
+
+CREATE TABLE IF NOT EXISTS test_sushi(
+    uuid uuid DEFAULT uuid_generate_v4(), 
+    food VARCHAR NOT NULL,
+    rest_time VARCHAR,
+    PRIMARY KEY(uuid)
+);
+
+/* create other tables here*/
+
+
+/*insert first user*/
+
+INSERT INTO application_user (username, password) VALUES('assouza', crypt('admin', 'my_key_salt'));
+
+INSERT INTO test_sushi (food, rest_time) VALUES('leite', 'a tarde');

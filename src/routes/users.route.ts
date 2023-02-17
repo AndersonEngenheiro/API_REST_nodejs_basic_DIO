@@ -7,22 +7,29 @@
 
 import { StatusCodes } from 'http-status-codes'
 import { Router, Response, Request,NextFunction } from "express";
+import userRepository from '../repositories/user.repository';
+import { UserRepository_func } from '../repositories/user.respository.func';
+
 // permite criar configuraçoes de rotas
 // configuracáo apartada
 
 const usersRoute = Router();
 
-usersRoute.get('/users', (req: Request, res:Response,next:NextFunction) =>{
-    const users = [{userName: 'assouza'}];
+usersRoute.get('/users', async (req: Request, res:Response,next:NextFunction) =>{
+    const users = await userRepository.findAllUser();
     res.status(StatusCodes.OK).send(users)
 })
 
+usersRoute.get('/gatinio', async( req: Request, res: Response, next: NextFunction) =>{
+    const cats = await (await UserRepository_func()).findAllCats();
+    res.status(StatusCodes.OK).send(cats)
+})
+
                                             // definimos o parametro como string
-usersRoute.get('/users/:uuid', (req: Request<{uuid:string}>, res:Response,next:NextFunction)=>{
+usersRoute.get('/users/:uuid', async (req: Request<{uuid:string}>, res:Response,next:NextFunction)=>{
     const uuid = req.params.uuid; 
     // BancoDeDados.getUserByUuid(uuid)
     res.status(StatusCodes.OK).send({ uuid })
-
 })
 
 // atençao ao json
